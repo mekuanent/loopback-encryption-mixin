@@ -7,15 +7,15 @@ In your model-config.json: add "../node_modules/loopback-encryption-mixin" as a 
 
 ```json
 {
-...
+    "...": "...",
     "mixins": [
       "loopback/common/mixins",
       "loopback/server/mixins",
       "../common/mixins",
       "./mixins",
       "../node_modules/loopback-encryption-mixin"
-    ]
-...
+    ],
+    "....": "..."
 }
   ```
 
@@ -23,7 +23,7 @@ Then add the mixin to your model
 
 ```json
 {
-...
+"...": "...",
 "mixins": {
     "Encryption": {
       "fields": ["name"],
@@ -37,9 +37,9 @@ Then add the mixin to your model
     }
   },
  "properties": {
-    ...
-  }
- ...
+    "...": "...",
+  },
+ "....": "..."
  }
   ```
 
