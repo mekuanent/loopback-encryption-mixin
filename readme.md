@@ -37,7 +37,7 @@ Then add the mixin to your model
     }
   },
  "properties": {
-    "...": "...",
+    "...": "..."
   },
  "....": "..."
  }
