@@ -1,0 +1,25 @@
+{
+  "name": "loopback-encryption-mixin",
+  "version": "0.0.1",
+  "description": "A mixin that transparently encrypts fields of a module at a save and decrypts fiels at get.",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mekuanent/loopback-encryption-mixin.git"
+  },
+  "keywords": [
+    "encryption",
+    "mixin",
+    "gdpr",
+    "loopback",
+    "model",
+    "protection",
+    "data"
+  ],
+  "author": "mekuanent getachew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mekuanent/loopback-encryption-mixin/issues"
+  },
+  "homepage": "https://github.com/mekuanent/loopback-encryption-mixin#readme"
+}
