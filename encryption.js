@@ -3,12 +3,12 @@
  */
 var crypto = require('crypto');
 
-module.exports = function(Model, options) {
+module.exports = function (Model, options) {
 
     'use strict';
 
     var defaultOpt = {
-        "fields" : [],
+        "fields": [],
         "password": "asiyd87yshd23878hujnwqd78",
         "salt": "oldrleovjja0jz7h",
         "iteration": 100,
@@ -26,17 +26,17 @@ module.exports = function(Model, options) {
             options.iteration || defaultOpt.iteration,
             options.hashBytes || defaultOpt.hashBytes,
             options.hashAlgorithm || defaultOpt.hashAlgorithm,
-            function (err, derivedKey){
-                if(err) {
+            function (err, derivedKey) {
+                if (err) {
                     console.log(err);
                     next(err);
                 }
-                else{
+                else {
                     var cipher = crypto.createCipheriv(options.encryptionAlgorithm || defaultOpt.encryptionAlgorithm, derivedKey, iv);
                     var fields = options.fields || defaultOpt.fields;
 
-                    for(var i in fields){
-                        var crypted = cipher.update(ctx.data[fields[i]],'utf8','hex');
+                    for (var i in fields) {
+                        var crypted = cipher.update(ctx.data[fields[i]], 'utf8', 'hex');
                         crypted += cipher.final('hex');
                         ctx.data[fields[i]] = crypted;
                     }
@@ -53,26 +53,28 @@ module.exports = function(Model, options) {
             options.iteration || defaultOpt.iteration,
             options.hashBytes || defaultOpt.hashBytes,
             options.hashAlgorithm || defaultOpt.hashAlgorithm,
-            function (err, derivedKey){
-                if(err) {
+            function (err, derivedKey) {
+                if (err) {
                     console.log(err);
                     next(err);
                 }
-                else{
-                    var cipher = crypto.createDecipheriv(options.encryptionAlgorithm || defaultOpt.encryptionAlgorithm, derivedKey, iv);
+                else {
+
                     var fields = options.fields || defaultOpt.fields;
 
-                    for(var i in fields){
-                        var decrypted = cipher.update(ctx.data[fields[i]],'hex', 'utf8');
-                        try{
+                    for (var i in fields) {
+                        var cipher = crypto.createDecipheriv(options.encryptionAlgorithm || defaultOpt.encryptionAlgorithm, derivedKey, iv);
+                        var decrypted = cipher.update(ctx.data[fields[i]], 'hex', 'utf8');
+                        try {
                             decrypted += cipher.final('utf8');
                             ctx.data[fields[i]] = decrypted;
-                            next();
-                        }catch (ex){
+
+                        } catch (ex) {
                             ex.message += "\nThis usually happens when the field contains a plain text! please make sure to remove/re-save that";
                             next(ex);
                         }
                     }
+                    next();
 
                 }
             });
