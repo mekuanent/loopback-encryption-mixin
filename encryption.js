@@ -32,14 +32,20 @@ module.exports = function (Model, options) {
                     next(err);
                 }
                 else {
-                    var cipher = crypto.createCipheriv(options.encryptionAlgorithm || defaultOpt.encryptionAlgorithm, derivedKey, iv);
                     var fields = options.fields || defaultOpt.fields;
 
-                    for (var i in fields) {
-                        var crypted = cipher.update(ctx.data[fields[i]], 'utf8', 'hex');
-                        crypted += cipher.final('hex');
-                        ctx.data[fields[i]] = crypted;
+                    try{
+                        for (var i in fields) {
+                            var cipher = crypto.createCipheriv(options.encryptionAlgorithm || defaultOpt.encryptionAlgorithm, derivedKey, iv);
+                            var crypted = cipher.update(ctx.data[fields[i]], 'utf8', 'hex');
+                            crypted += cipher.final('hex');
+                            ctx.data[fields[i]] = crypted;
+                        }
+                    }catch (ex){
+                        ex.message += "\nThis usually happens when the field contains a plain text! please make sure to remove/re-save that";
+                        next(ex);
                     }
+
                     next();
                 }
             });
@@ -61,18 +67,16 @@ module.exports = function (Model, options) {
                 else {
 
                     var fields = options.fields || defaultOpt.fields;
-
-                    for (var i in fields) {
-                        var cipher = crypto.createDecipheriv(options.encryptionAlgorithm || defaultOpt.encryptionAlgorithm, derivedKey, iv);
-                        var decrypted = cipher.update(ctx.data[fields[i]], 'hex', 'utf8');
-                        try {
+                    try{
+                        for (var i in fields) {
+                            var cipher = crypto.createDecipheriv(options.encryptionAlgorithm || defaultOpt.encryptionAlgorithm, derivedKey, iv);
+                            var decrypted = cipher.update(ctx.data[fields[i]], 'hex', 'utf8');
                             decrypted += cipher.final('utf8');
                             ctx.data[fields[i]] = decrypted;
-
-                        } catch (ex) {
-                            ex.message += "\nThis usually happens when the field contains a plain text! please make sure to remove/re-save that";
-                            next(ex);
                         }
+                    }catch (ex){
+                        ex.message += "\nThis usually happens when the field contains a plain text! please make sure to remove/re-save that";
+                        next(ex);
                     }
                     next();
 
