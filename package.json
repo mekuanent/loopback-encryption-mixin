@@ -1,6 +1,6 @@
 {
   "name": "loopback-encryption-mixin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A mixin that transparently encrypts fields of a module at a save and decrypts fiels at get.",
   "scripts": {},
   "repository": {
