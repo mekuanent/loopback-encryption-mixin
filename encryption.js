@@ -74,11 +74,13 @@ module.exports = function (Model, options) {
                             decrypted += cipher.final('utf8');
                             ctx.data[fields[i]] = decrypted;
                         }
+                        next();
                     }catch (ex){
                         ex.message += "\nThis usually happens when the field contains a plain text! please make sure to remove/re-save that";
-                        next(ex);
+                        console.log(ex.message);
+                        next();
                     }
-                    next();
+
 
                 }
             });
