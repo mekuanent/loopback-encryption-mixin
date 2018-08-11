@@ -16,8 +16,8 @@
     "protection",
     "data"
   ],
-  "author": "mekuanent getachew",
-  "license": "ISC",
+  "author": "Mekuanent Getachew",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mekuanent/loopback-encryption-mixin/issues"
   },
